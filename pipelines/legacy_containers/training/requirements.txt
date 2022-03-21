@@ -1,0 +1,4 @@
+click==8.0.4
+boto3
+tensorflow==2.7.0
+mlflow

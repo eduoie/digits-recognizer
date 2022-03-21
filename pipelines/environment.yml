@@ -1,0 +1,14 @@
+# Conda environment for local development
+name: digits-recognizer
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - numpy
+  - pandas
+  - luigi
+  - boto3
+  - pip:
+    - docker>=3.3.0

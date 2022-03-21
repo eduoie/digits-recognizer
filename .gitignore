@@ -1,0 +1,8 @@
+.venv
+.vscode
+.idea
+.mypy_cache
+__pycache__
+.DS_Store
+/data/initial_data/*.npy
+/istio-1.13.2/

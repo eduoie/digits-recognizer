@@ -1,0 +1,6 @@
+docker>=3.3.0
+luigi>=2.8.3
+click>=7.0
+pandas
+numpy
+boto3
