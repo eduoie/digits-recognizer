@@ -38,7 +38,11 @@ def _parse_args():
     # model_dir is always passed in from SageMaker. By default this is a S3 path under the default bucket.
     parser.add_argument('--model_dir', type=str)
     parser.add_argument('--sm-model-dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
-    parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
+
+    # TODO: this is an annoying difference between local and SageMaker training parameters
+    parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
+    # parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
+
     # parser.add_argument('--hosts', type=list, default=json.loads(os.environ.get('SM_HOSTS')))
     parser.add_argument('--current-host', type=str, default=os.environ.get('SM_CURRENT_HOST'))
 
