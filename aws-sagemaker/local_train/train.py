@@ -39,9 +39,13 @@ def _parse_args():
     parser.add_argument('--model_dir', type=str)
     parser.add_argument('--sm-model-dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
 
-    # TODO: this is an annoying difference between local and SageMaker training parameters
-    parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
-    # parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
+    # this is an annoying difference between local and SageMaker training parameters
+    if os.environ.get('SM_CHANNEL_TRAINING') is None: # if none, environment is on SageMaker
+        print('Environment is SageMaker')
+        parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN')) # sagemaker
+    else:
+        print('Environment is Local')
+        parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING')) # local
 
     # parser.add_argument('--hosts', type=list, default=json.loads(os.environ.get('SM_HOSTS')))
     parser.add_argument('--current-host', type=str, default=os.environ.get('SM_CURRENT_HOST'))
@@ -69,10 +73,16 @@ if __name__ == "__main__":
     valid_X, valid_y = X_data[split_point:], y_data[split_point:]
 
     model = train_model(train_X, train_y, valid_X, valid_y)
-    path = os.path.join(args.sm_model_dir, '01', 'model_v1.h5')
-    print(f'Model will be saved to: {path}')
+    path = os.path.join(args.sm_model_dir, '/1')
+    # save model
+    # model.save(args.sm_model_dir + '/1')
+    # print(f'Model will be saved to: {path}')
+
+
+    print(f'Model will be saved to: {args.sm_model_dir + "/1"}')
+    model.save(args.sm_model_dir + '/1')
 
     # https://www.tensorflow.org/guide/saved_model
-    # The save-path follows a convention used by TensorFlow Serving where the last path component (01/ here) is a
+    # The save-path follows a convention used by TensorFlow Serving where the last path component (1/ here) is a
     # version number for your model - it allows tools like Tensorflow Serving to reason about the relative freshness.
-    model.save(path)
+    # model.save(path)

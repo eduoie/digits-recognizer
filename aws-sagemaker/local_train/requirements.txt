@@ -1,3 +1,4 @@
 sagemaker
 sagemaker[local]
 tensorflow==2.7.0
+Pillow
